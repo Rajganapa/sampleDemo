@@ -1,19 +1,26 @@
 package sampleSpringApplicationDemo.demo;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.java.dto.FlightBookingAcknowledgement;
+import com.java.dto.FlightBookingRequest;
+import com.java.service.FightBookingService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@EnableTransactionManagement
 public class DemoController {
+
+    @Autowired
+    private FightBookingService fightBookingService;
 
     @RequestMapping
     public String defaultMethod(){
         return "Welcome to SpringBoot Demo";
 
     }
-    @GetMapping(value ="/demo")
-    public String byMappingMethod(){
-        return "Getmapping";
+    @PostMapping(value ="/flight")
+    public FlightBookingAcknowledgement bookFlightTicket(@RequestBody FlightBookingRequest request){
+        return fightBookingService.bookFlightTicket(request);
     }
 }
